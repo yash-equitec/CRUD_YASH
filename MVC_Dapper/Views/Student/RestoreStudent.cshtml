@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MVC_Dapper.Models.StudentModel>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Mobile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student_DOB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student_Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student_Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student_Mobile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student_Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDeleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

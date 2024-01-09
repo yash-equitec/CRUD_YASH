@@ -1,0 +1,101 @@
+﻿@model IEnumerable<MVC_Dapper.Models.StudentModel>
+
+<style>
+    body {
+        padding-top: 20px;
+    }
+
+    .btn {
+        margin-right: 5px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .restore-btn {
+        background-color: #5bc0de;
+        color: #fff;
+        border: 1px solid #46b8da;
+        padding: 6px 12px;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 3px;
+    }
+
+        .restore-btn:hover {
+            background-color: #46b8da;
+            color: #fff;
+            border: 1px solid #2aabd2;
+        }
+</style>
+<p>
+    @Html.ActionLink("Return", "GetAllStudentDetails", null, new { @class = "btn btn-primary btn" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Mobile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Address)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Address)
+            </td>
+
+            <td>
+
+                @Html.ActionLink("Restore", "RestoreStudent", new { ID = item.Student_ID })
+            </td>
+        </tr>
+    }
+
+</table>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">

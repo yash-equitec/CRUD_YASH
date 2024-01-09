@@ -1,0 +1,43 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<MVC_Dapper.Models.StudentModel>
+
+@{
+    ViewBag.Title = "Paginated Students";
+}
+
+<h2>Paginated Students</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student_ID</th>
+            <th>Student_Name</th>
+            <th>Student_DOB</th>
+            <th>Student_Gender</th>
+            <th>Student_Address</th>
+            <th>Student_Age</th>
+            <th>Student_Mobile</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Student_ID</td>
+                <td>@student.Student_Name</td>
+                <td>@student.Student_DOB</td>
+                <td>@student.Student_Gender</td>
+                <td>@student.Student_Address</td>
+                <td>@student.Student_Age</td>
+                <td>@student.Student_Mobile</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination-container">
+    @Html.PagedListPager(Model, page => Url.Action("GetAllStudentDetails", new { page }), new PagedListRenderOptions
+    {
+        
+    })
+</div>

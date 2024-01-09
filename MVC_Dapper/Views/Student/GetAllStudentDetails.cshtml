@@ -1,0 +1,309 @@
+﻿@model IEnumerable<MVC_Dapper.Models.StudentModel>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<div class="container d-flex">
+    @Html.ActionLink("Create New", "AddStudent", null, new { @class = "btn btn-primary btn" })
+
+    @Html.ActionLink("Deleted Data", "SoftDeletedStudents", null, new { @class = "btn btn-danger btn" })
+
+    @Html.ActionLink("Export to excel", "ExportToExcel", null, new { @class = "btn btn-info btn" })
+</div>
+
+<style>
+    #searchInput {
+        width: 100%;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+</style>
+
+<div class="A1">
+    <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+</div>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+         th,  td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+    .btn-group {
+        display: flex;
+        gap: 5px; 
+    }
+
+    .btn {
+        padding: 8px 16px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        color: #fff;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+</style>
+
+<table class="table" id="myStudent">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Mobile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student_Address)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Address)
+            </td>
+            <td>
+                <div class="btn-group">
+                    @Html.ActionLink("Edit", "EditStudentDetails", new { id = item.Student_ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "DeleteStudent", new { id = item.Student_ID }, new { @class = "btn btn-danger" })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="text-right">
+    <p>
+        @Html.ActionLink("Print", "PrintTable", null, new { @class = "btn btn-success" })
+    </p>
+</div>
+
+<style>
+    .A1 {
+        display: flex;
+        justify-content: end
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchInput');
+        const table = document.getElementById('myStudent');
+        const rows = Array.from(table.getElementsByTagName('tr'));
+
+        searchInput.addEventListener('input', () => {
+            const filterWords = searchInput.value.toLowerCase().split(' ');
+
+            rows.forEach((row, index) => {
+                if (index !== 0) {
+                    let isMatch = false;
+
+                    row.cells.forEach(cell => {
+                        const cellContent = cell.textContent.toLowerCase();
+                        isMatch = filterWords.every(word => cellContent.includes(word));
+
+                        if (isMatch) {
+                            return; 
+                        }
+                    });
+
+                    row.style.display = isMatch ? '' : 'none';
+                }
+            });
+        });
+    });
+
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var table = document.getElementById('myStudent');
+        var headers = table.getElementsByTagName('th');
+
+        for (var i = 0; i < headers.length; i++) {
+            headers[i].addEventListener('click', function () {
+                sortTable(this.cellIndex);
+            });
+        }
+
+        function sortTable(columnIndex) {
+            var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            switching = true;
+            dir = "asc";
+
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+
+                    x = rows[i].getElementsByTagName("td")[columnIndex];
+                    y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<style>
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+        .pagination-container a {
+            padding: 8px 16px;
+            margin: 0 4px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+            .pagination-container a:hover {
+                background-color: #007bff;
+                color: #fff;
+            }
+
+        .pagination-container .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+</style>
+
+<div class="pagination-container">
+    @if (ViewBag.PageNumber > 1)
+    {
+        <a href="@Url.Action("GetAllStudentDetails", new { page = ViewBag.PageNumber - 1 })">Previous</a>
+    }
+
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        <a href="@Url.Action("GetAllStudentDetails", new { page = i })" class="@(i == ViewBag.PageNumber ? "active" : "")">@i</a>
+    }
+
+    @if (ViewBag.PageNumber < ViewBag.TotalPages)
+    {
+        <a href="@Url.Action("GetAllStudentDetails", new { page = ViewBag.PageNumber + 1 })">Next</a>
+    }
+</div>
+
+
+
+<div class="d-container">
+    <label for="recordsPerPage">Records Per Page: </label>
+    <select id="recordsPerPage" onchange="changePageSize(this.value)">
+        <option value="3" @(ViewBag.PageSize == 3 ? "selected" : "")>3 Records</option>
+        <option value="6" @(ViewBag.PageSize == 6 ? "selected" : "")>6 Records</option>
+        <option value="9" @(ViewBag.PageSize == 9 ? "selected" : "")>9 Records</option>
+    </select>
+</div>
+
+<script>
+    function changePageSize(size) {
+        window.location.href = "@Url.Action("GetAllStudentDetails")?pageSize=" + size;
+    }
+</script>
+
+<style>
+    .d-container {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+    }
+        .d-container label {
+            margin-right: 10px;
+        }
+        .d-container select {
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+            .d-container select:hover {
+                background-color: #007bff;
+                color: #fff;
+            }
+</style>

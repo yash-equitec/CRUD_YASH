@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MVC_Dapper.Models.StudentModel>
+
+<html>
+<head>
+    <title>Table Print</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <table class='table table-bordered'>
+        <thead>
+            <tr>
+                <th>Student_Name</th>
+                <th>Student_DOB</th>
+                <th>Student_Age</th>
+                <th>Student_Gender</th>
+                <th>Student_Mobile</th>
+                <th>Student_Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.Student_Name</td>
+                    <td>@employee.Student_DOB</td>
+                    <td>@employee.Student_Age</td>
+                    <td>@employee.Student_Gender</td>
+                    <td>@employee.Student_Mobile</td>
+                    <td>@employee.Student_Address</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button onclick="printData()">Print</button>
+
+    <script>
+    function printData() {
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<table class="table table-bordered">');
+        printWindow.document.write('<thead><tr><th>Student_Name</th><th>Student_DOB</th><th>Student_Age</th><th>Student_Gender</th><th>Student_Mobile</th><th>Student_Address</th></tr></thead>');
+        printWindow.document.write('<tbody>');
+
+    
+        @foreach (var employee in Model)
+        {
+            <text>
+                printWindow.document.write('<tr>');
+                printWindow.document.write('<td>' + '@employee.Student_Name' + '</td>');
+                printWindow.document.write('<td>' + '@employee.Student_DOB' + '</td>');
+                printWindow.document.write('<td>' + '@employee.Student_Age' + '</td>');
+                printWindow.document.write('<td>' + '@employee.Student_Gender' + '</td>');
+                printWindow.document.write('<td>' + '@employee.Student_Mobile' + '</td>');
+                printWindow.document.write('<td>' + '@employee.Student_Address' + '</td>');
+                printWindow.document.write('</tr>');
+            </text>
+        }
+
+        printWindow.document.write('</tbody></table>');
+        printWindow.document.write('</body></html>');
+
+        printWindow.document.close();
+        printWindow.print();
+    }
+    </script>
+
+</body>
+</html>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
